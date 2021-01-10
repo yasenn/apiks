@@ -1,0 +1,75 @@
+@startuml
+map pet_type {
+ id => serial
+ type => varchar(30)
+}
+map pet {
+ id => serial
+ pet_type_id => smallint
+ name => varchar(30)
+ client_id => smallint
+ age => smallint
+}
+map doctor_position {
+ id => serial
+ position => varchar(20)
+}
+map user_role {
+ id => serial
+ role => varchar(15)
+}
+map pet_medical_card {
+ id => serial
+ doctor_id => smallint
+ pet_id => smallint
+ info => varchar(1000)
+ date_of_visit => date
+}
+map doctor {
+ id => serial
+ name => varchar(30)
+ doctor_position_id => smallint
+ phone => varchar(13)
+ clinic_id => smallint
+ cabinet => smallint
+}
+map price_list {
+ id => serial
+ service => varchar(30)
+ price => smallint
+ doctor_position_id => smallint
+}
+map session_list {
+ id => serial
+ client_id => smallint
+ clinic_id => smallint
+ doctor_id => smallint
+ date_of_visit => date
+ price_list_id => smallint
+}
+map clinic {
+ id => serial
+ address => varchar(50)
+ schedule_clinic => varchar(20)
+ phone => varchar(20)
+}
+map client {
+ id => serial
+ name => varchar(30)
+ phone => varchar(13)
+ email => varchar(30)
+ user_role_id => smallint
+}
+pet -> pet_type
+pet_medical_card -> pet
+pet_medical_card -> doctor
+pet -> client
+doctor -> doctor_position
+doctor -> clinic
+session_list -> doctor
+price_list -> doctor_position
+session_list -> doctor_position
+client -> user_role
+session_list -> client
+session_list -> clinic
+@enduml
