@@ -2,7 +2,7 @@
 
 from settings import *
 import json
-from myapp import api
+from api import api
 
 db = SQLAlchemy(app)
 
