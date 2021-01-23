@@ -19,29 +19,24 @@ class Session_list(db.Model):
 
 # You may decorate your operation with @swagger.operation
 class Session_list(db.Model):
-    "add_session_list"
+    "get_session_list"
     @swagger.operation(
-        notes='some really good notes',
+        notes='Get list of sessions',
         responseClass=ModelClass.__name__,
-        nickname='upload',
-        parameters=[
-            {
-              "name": "body",
-              "description": "blueprint object that needs to be added. YAML.",
-              "required": True,
-              "allowMultiple": False,
-              "dataType": ModelClass2.__name__,
-              "paramType": "body"
-            }
-          ],
+        nickname='session_list',
+        parameters=[ ],
         responseMessages=[
             {
-              "code": 201,
-              "message": "Created. The URL of the created blueprint should be in the Location header"
+              "code": 200,
+              "message": "List of sessions"
             },
             {
               "code": 405,
               "message": "Invalid input"
+            },
+            {
+              "code": 503,
+              "message": "Server error"
             }
           ]
         )
@@ -58,6 +53,27 @@ class Session_list(db.Model):
         db.session.commit()  # commit changes to session
 
 class Price_list(db.Model):
+    "get price list"
+    @swagger.operation(
+        notes='Get price list ',
+        responseClass=ModelClass.__name__,
+        nickname='session_list',
+        parameters=[ ],
+        responseMessages=[
+            {
+              "code": 200,
+              "message": "Price List "
+            },
+            {
+              "code": 405,
+              "message": "Invalid input"
+            },
+            {
+              "code": 503,
+              "message": "Server error"
+            }
+          ]
+        )
     __tablename__ = 'Price_list'  # creating a table name
     id = db.Column(db.Integer, primary_key=True)  # this is the primary key
     service = db.Column(db.String(30), nullable=False)
@@ -70,6 +86,27 @@ class Price_list(db.Model):
                 'price': self.price, 'doctor_position_id': self.doctor_position_id}
 
 class Pet_medical_card(db.Model):
+    "get_session_list"
+    @swagger.operation(
+        notes='Get list of sessions',
+        responseClass=ModelClass.__name__,
+        nickname='session_list',
+        parameters=[ ],
+        responseMessages=[
+            {
+              "code": 200,
+              "message": "List of sessions"
+            },
+            {
+              "code": 405,
+              "message": "Invalid input"
+            },
+            {
+              "code": 503,
+              "message": "Server error"
+            }
+          ]
+        )
     __tablename__ = 'Pet_medical_card'  # creating a table name
     id = db.Column(db.Integer, primary_key=True)  # this is the primary key
     doctor_id = db.Column(db.Integer, nullable=False)

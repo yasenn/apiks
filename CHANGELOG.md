@@ -1,3 +1,18 @@
+# 0.0.3
+
+## Features
+
+1610649215 flask api app
+1610652032 Swagger updated
+
+# 0.0.2
+
+## Features
+
+1610355538 Backend boilerplate
+1610355640 Nginx reverse proxy boilerplate
+1610398548 Provisioning - initial commit
+
 # 0.0.1
 
 ## Documentation and Architecture
