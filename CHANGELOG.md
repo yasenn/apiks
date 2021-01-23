@@ -1,3 +1,8 @@
+# 0.0.4
+
+* Flask refactoring and debug
+* kong initial app
+
 # 0.0.3
 
 ## Features
