@@ -1,3 +1,8 @@
+# 0.0.5
+
+1611495212 Dockerfile
+1611522800 Docker build and push to the AWS ECR
+
 # 0.0.4
 
 * Flask refactoring and debug
