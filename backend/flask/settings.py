@@ -12,8 +12,12 @@ db = SQLAlchemy()
 # Wrap the Api with swagger.docs. It is a thin wrapper around the Api class that adds some swagger smarts
 # api = swagger.docs(Api(app), apiVersion='0.1')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = ''
+app.config['SQLALCHEMY_DATABASE_URI'] = 'apiks.c8kflxch1q8h.eu-west-2.rds.amazonaws.com'
 app.config['SQLALCHEMY_TRACK_MODFICATIONS'] = False
+
+@app.route('/')
+def hello():
+    return "Hello World!"
 
 @app.route("/session_list", methods=['GET'])
 def session_list():
