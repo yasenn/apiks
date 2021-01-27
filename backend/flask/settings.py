@@ -276,3 +276,4 @@ def get_pets():
 
 if __name__ == "__main__":
     app.run(port=5432, debug=True)
+# swagger: http://localhost:5000/apidocs/
