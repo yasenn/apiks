@@ -1,0 +1,43 @@
+swagger: "2.0"
+info:
+  title: "service API"
+  description: "service API"
+  version: "1.0.0"
+basePath: "/api/v1/pet"
+schemes:
+  - http
+  - https
+paths:
+  /pet/{petId}:
+    get:
+      tags:
+        - Pets
+      summary: "Retrieves the info about pet"
+      description: "Retrieves the info about pet"
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: petId
+          description: "Pet Id"
+          type: string
+          required: true
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/Pet"
+        403:
+          description: "You have no permissions"
+        404:
+          description: "Not found"
+        405:
+          description: "Allowed: GET"
+        501:
+          description: "Unknown request method"
+        500:
+          description: "Internal server error"
+    `;
+}
