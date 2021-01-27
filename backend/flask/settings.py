@@ -2,15 +2,14 @@
 
 from flask import Flask, request, Response, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from flask_restful import Api
-from flask_restful_swagger import swagger
 import json
-
+from flasgger import Swagger
 
 app = Flask(__name__)
 db = SQLAlchemy()
 # Wrap the Api with swagger.docs. It is a thin wrapper around the Api class that adds some swagger smarts
 # api = swagger.docs(Api(app), apiVersion='0.1')
+swagger = Swagger(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'apiks.c8kflxch1q8h.eu-west-2.rds.amazonaws.com'
 app.config['SQLALCHEMY_TRACK_MODFICATIONS'] = False
@@ -162,17 +161,57 @@ class PetType(db.Model):
     def json(self):
         return {'id': self.id, 'type': self.type}
 
-@app.route('/pet', methods=['GET'])
-def get_pets():
-    return jsonify({'pet': PetTable.get_all_pets()})
+#@app.route('/pet', methods=['GET'])
+#def get_pets():
+#    return jsonify({'pet': PetTable.get_all_pets()})
 
 @app.route('/pet/<int:id>', methods=['GET'])
 def get_pet_by_id(id):
+    """Example endpoint returning a pet by it's id
+    This is using docstrings for specifications.
+    ---
+    parameters:
+      - name: Pet't id
+        in: path
+        type: string
+        required: true
+    responses:
+      200:
+        description: Information about the pet
+    """
     return_value = PetTable.get_pet(id)
     return jsonify(return_value)
 
 @app.route('/pet', methods=['POST'])
 def add_pet():
+    """Example endpoint adding a new pet to the list of pets
+    This is using docstrings for specifications.
+    ---
+    parameters:
+      - name: Pet's id
+        in: path
+        type: Integer
+        required: true
+        description: Type down the id of new pet
+      - name: name
+        in: path
+        type: string
+        required: true
+        description: Name of the pet required
+      - name: client id
+        in: path
+        type: Integer
+        required: true
+        description: Client id
+      - name: age
+        in: path
+        type: Integer
+        required: true
+        description: Age of the pet
+    responses:
+      200:
+        description: New pet was added
+    """
     request_data = request.get_json()  # getting data from client
     pet.add_pet(request_data["pet_type_id"], request_data["name"],
                     request_data["client_id"], request_data["age"])
@@ -181,9 +220,59 @@ def add_pet():
 
 @app.route('/pets/<int:id>', methods=['DELETE'])
 def remove_pet(id):
+    """Example endpoint deleting a pet by it's id
+    This is using docstrings for specifications.
+    ---
+    parameters:
+      - name: Delete pet by it's id
+        in: path
+        type: string
+        description: pet's id
+        required: true
+        default: all
+    responses:
+      200:
+        description: Pet was deleted
+    """
     pet.delete_pet(id)
     response = Response("Pet Deleted", status=200, mimetype='application/json')
     return response
+
+@app.route('/pet', methods=['GET'])
+def get_pets():
+    """Example endpoint returning a list of pets
+    This is using docstrings for specifications.
+    ---
+    parameters:
+      - name: Pets
+        in: path
+        type: string
+        enum: ['all', 'cats', 'dogs']
+        required: true
+        default: all
+    definitions:
+      Pets:
+        type: object
+        properties:
+          pet_name:
+            type: array
+            items:
+              $ref: '#/pet'
+      Pet:
+        type: string
+    responses:
+      200:
+        description: A list of pets (may be filtered by type)
+        schema:
+          $ref: '#/pet'
+        examples:
+          rgb: ['name1', 'name2', 'name3']
+    """
+#    all_colors = {
+#        'cmyk': ['cian', 'magenta', 'yellow', 'black'],
+#        'rgb': ['red', 'green', 'blue']
+#    }
+    return jsonify({'pet': PetTable.get_all_pets()})
 
 if __name__ == "__main__":
     app.run(port=5432, debug=True)
